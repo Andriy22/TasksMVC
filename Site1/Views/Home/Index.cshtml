@@ -1,0 +1,78 @@
+﻿@model IEnumerable<DAL.Tasks>
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<script type="text/javascript">
+    function OnBegin() {
+        alert("Происходит отправка запроса");
+    }
+    function OnSuccess(data) {
+        alert("Запрос был успешно выполнен. Получены следующие данные: \n" + data);
+    }
+    function OnFailure(request, error) {
+        $("#results").html("Книги указанного автора не содержатся в базе данных.");
+    }
+    function OnComplete(request, status) {
+        alert("Статус запроса : " + status);
+    }
+    function Click(val) {
+        $.ajax({
+            url: `http://localhost:50437/Home/GetJson/${val}`,
+            type: "GET",
+            success: function (data) {
+                console.log(data);
+                $('#result').html(`<p>Description: ${data.Descriptions}</p><br><p>Price: ${data.Price}</p><br><p>Test: ${data.Test}</p><br><button class="btn-floating pulse" onclick="Click2()">Clear</button>`)
+            },
+            error: function () {
+                alert("123");
+            }
+        });
+    }
+    function Click2() {
+        $('#result').html(`<br>`);
+    }
+
+</script>
+<br />
+<a href="~/Home/Create" class="col s6 offset-s3 btn red pulse" style="text-align:center">CREATE NEW TASK</a>
+<br />
+<div class="col s6 offset-s3" style="text-align:center"><h2>TASKS TABLE</h2></div>
+
+<table class="centered">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Date</th>
+            <th>IsCompleted</th>
+            <th>Priority</th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+        @{
+            int counter = 0;
+            foreach (DAL.Tasks p in Model)
+            {
+                counter++;
+        <tr>
+            <td>@counter</td>
+            <td>@p.Name</td>
+            <td>@p.Date</td>
+            <td>@p.Status</td>
+            <td>@p.Priority_ID</td>
+        </tr>
+            }
+        }
+
+
+    </tbody>
+
+
+</table>
+<div id="result">
+
+</div>
+

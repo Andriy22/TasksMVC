@@ -1,0 +1,29 @@
+﻿@model PriorityAndTaskModel
+@{
+    /**/
+
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script>
+    $(document).ready(function () {
+        $('select').formSelect();
+    });
+</script>
+
+@Html.BeginForm()
+<div class="col s6 offset-s3 center"><h2>NEW TASK</h2></div>
+<div class="input-field col s12">
+    @Html.TextBoxFor(Model => Model.task.Name, new { id = "Name" })
+    <label for="Name">Name</label>
+</div>
+<div class="input-field col s12">
+    @Html.TextBoxFor(Model => Model.task.Date, new { @class = "timepicker", @type = "date" })
+    <label for="Date">Date</label>
+</div>
+
+<div class="input-field col s12">
+    @Html.DropDownListFor(Model => Model.task.Priority_ID, new SelectList(Model.SelectListItems, "Value", "Text"), "-Select Priority-")
+ 
+</div>
+@Html.EndForm()
