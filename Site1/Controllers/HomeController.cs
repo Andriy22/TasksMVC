@@ -40,7 +40,21 @@ namespace Site1.Controllers
             return View();
         }
 
-      
+        [HttpPost]
+        public ActionResult Create(PriorityAndTaskModel incomingData)
+        {
+            ctx.Tasks.Add(new Tasks()
+            {
+                Date = incomingData.task.Date,
+                Name = incomingData.task.Name,
+                Priority_ID = incomingData.task.Priority_ID,
+                Status = incomingData.task.Status
+            });
+            ctx.SaveChanges();
+
+            return Redirect("/");
+        }
+
 
     }
 }
