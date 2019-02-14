@@ -32,7 +32,7 @@ namespace Site1.Controllers
             PriorityAndTaskModel priorityAndTasksModel = new PriorityAndTaskModel()
             {
                 SelectListItems = items,
-                task = new Tasks()
+                task = new Tasks() { Status = true }
             };
             return View(priorityAndTasksModel);
         }
@@ -54,11 +54,14 @@ namespace Site1.Controllers
         [HttpPost]
         public ActionResult Create(PriorityAndTaskModel incomingData)
         {
+            int priority = incomingData.task.Priority_ID;
+            if (priority == 0)
+                priority++;
             ctx.Tasks.Add(new Tasks()
             {
                 Date = incomingData.task.Date,
                 Name = incomingData.task.Name,
-                Priority_ID = incomingData.task.Priority_ID,
+                Priority_ID = priority,
                 Status = incomingData.task.Status
             });
             ctx.SaveChanges();

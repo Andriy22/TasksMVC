@@ -25,17 +25,19 @@
 </div>
 <p>
     <label>
-        @Html.CheckBoxFor(Model => Model.task.Status)
+        @*<input type="checkbox" value="@Model.task.Status" name="task.Status">*@
+        @Html.CheckBoxFor(m => m.task.Status)
         <span>IsCompleted</span>
     </label>
 </p>
 <input type="submit" class="btn col s12 red pulse" value="Create" />
 }
 <script>
-    $(document).ready(function () {
+    $(function () {
         $('select').formSelect();
-    });
-    $(document).ready(function () {
         $('.datepicker').datepicker();
+        $("input[type='hidden']").each(function (index, element) {
+            $(this).appendTo($(element).parent());
+        });
     });
 </script>
