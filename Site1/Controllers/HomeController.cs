@@ -11,7 +11,18 @@ namespace Site1.Controllers
         DAL.DBase ctx = new DAL.DBase();
         public ActionResult Index()
         {
-            return View(ctx.Tasks);
+            
+            List<PrioritiesAndTasksModel> model = new List<PrioritiesAndTasksModel>();
+
+            if (ctx.Tasks.Count() != 0)
+            {
+                foreach (var el in ctx.Tasks)
+                {
+
+                    model.Add(new PrioritiesAndTasksModel() { task = el, priority = ctx.Priorities.FirstOrDefault(x => x.ID == el.Priority_ID) });
+                }
+            }
+            return View(model);
         }
         public ActionResult Create()
         {
